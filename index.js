@@ -112,7 +112,7 @@ class SecretKey {
   }
 
   create(passphrase, iv, timestamp) {
-    let splTime, encLarge, encSmall, encIV;
+    let splTime, encLarge, encSmall, encIV, nonce;
     let out = {
       secret: null,
       iv: null,
@@ -125,7 +125,8 @@ class SecretKey {
     splTime = this.splitTimestamp(timestamp);
     encLarge = this.intToBase32(this.cryptInt(splTime.large, passphrase, encIV));
     encSmall = this.intToBase32(this.cryptInt(splTime.small, passphrase, encIV));
-    out.secret = `${encLarge}-${encSmall}`;
+    nonce = this.intToBase32(splTime.small);        // Nonce is added to preserve uniqueness of values
+    out.secret = `${encLarge}-${encSmall}-${nonce}`;
     out.timestamp = timestamp;
     return out;
   }
