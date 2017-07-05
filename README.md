@@ -6,7 +6,7 @@
 
 A simple generator and validator for human-readable Base32-Crockford encoded Secret Keys.
 
- * Secret Keys are 15 characters in length consisting of 2 groups of 7 characters separated by dashes *(e.g. XXXXXXX-XXXXXXX)*
+ * Secret Keys are 23 characters in length consisting of 3 groups of 7 characters separated by dashes *(e.g. XXXXXXX-XXXXXXX-XXXXXXX)*
  * They avoids the problem that Base64 encoded values can create
    * Fully upper-case, but treat lower-case for their equivalents *(e.g. a = A)*
    * No tricky characters, but treat them equivalently *(i.e. 0 = O / 1 = L = I )*
@@ -25,9 +25,9 @@ console.log(secretKey.create('1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X'));
 ```
 **Output**:
 ```
-{ secret: 'K20QQDK-HKYV2H6',
-  iv: 'c1149d91-814d-496a-9a6e-fe80106bfba5',
-  timestamp: 1499287309231 }
+{ secret: 'CDDPMWJ-EYEZXNC-2K39BYN',
+  iv: '64d8291b-5ede-4a81-8c29-4decf35f4b85',
+  timestamp: 1499292145146 }
 ```
 
 ## Reference
@@ -36,9 +36,10 @@ console.log(secretKey.create('1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X'));
 Tests that a `secret` matches the `passphrase`, `iv`, and `timestamp` provided. Throws a `ReferenceError` if any of the parameters are missing.
 ```es2016
 let passphrase = '1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X';
-let secret = 'K20QQDK-HKYV2H6';
-let iv = 'c1149d91-814d-496a-9a6e-fe80106bfba5';
-let timestamp = 1499098368770;
+let secret = 'CDDPMWJ-EYEZXNC-2K39BYN';
+let iv = '64d8291b-5ede-4a81-8c29-4decf35f4b85';
+let timestamp = 1499292145146;
+
 uuidAPIKey.check(passphrase, secret, iv, timestamp);
 ```
 **Output**:
@@ -53,9 +54,9 @@ uuidAPIKey.create('1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X');
 ```
 **Output**:
 ```
-{ secret: 'K20QQDK-HKYV2H6',
-  iv: 'c1149d91-814d-496a-9a6e-fe80106bfba5',
-  timestamp: 1499287309231 }
+{ secret: 'CDDPMWJ-EYEZXNC-2K39BYN',
+  iv: '64d8291b-5ede-4a81-8c29-4decf35f4b85',
+  timestamp: 1499292145146 }
 ```
 
 ## License

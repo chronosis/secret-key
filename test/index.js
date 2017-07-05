@@ -1,12 +1,17 @@
 const test = require('unit.js');
 
-let testIntConv = '\u0014|Ë¯';
-let testTimestamp = { large: 349, small: 343722927 };
+let testIntConv = '\u0014Æú';
+let testTimestamp = { large: 349, small: 348558842 };
 let testPass = '1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X';
-let testSecret = { secret: 'K20QQDK-HKYV2H6', iv: 'c1149d91-814d-496a-9a6e-fe80106bfba5', timestamp: 1499287309231 };
+let testSecret = {
+  secret: 'CDDPMWJ-EYEZXNC-2K39BYN',
+  iv: '64d8291b-5ede-4a81-8c29-4decf35f4b85',
+  timestamp: 1499292145146
+};
 let badPass = '1EEA6DC-JAM4DP2-PHVYPBN-VJXCJ9X';
 let badIV = '0b9ca335-92a8-46d8-b277-ec2ed83ac427';
 let badTimestamp = 1499287309236;
+let expectedLen = 23;
 
 describe('secret-key', () => {
 
@@ -46,7 +51,7 @@ describe('secret-key', () => {
     test.assert(() => {
       let test = true;
       for (let i = 0; i < 100; i++) {
-        test = test && (MainClass.create().secret.length == 15);
+        test = test && (MainClass.create().secret.length == expectedLen);
       }
       return test;
     });
