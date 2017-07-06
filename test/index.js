@@ -8,6 +8,11 @@ let testSecret = {
   iv: '64d8291b-5ede-4a81-8c29-4decf35f4b85',
   timestamp: 1499292145146
 };
+let testTrickySecret = {
+  secret: 'HQYOT19-JMXGQLH-333GFQK',
+  iv: '8ee8a69b-da65-4866-bf48-ae7578b2142c',
+  timestamp: 1499359283166
+}
 let badPass = '1EEA6DC-JAM4DP2-PHVYPBN-VJXCJ9X';
 let badIV = '0b9ca335-92a8-46d8-b277-ec2ed83ac427';
 let badTimestamp = 1499287309236;
@@ -28,22 +33,34 @@ describe('secret-key', () => {
   });
 
   it('good key comparison', () => {
+    test.assert(MainClass.compare(testTrickySecret.secret.toLowerCase().replace(/O/g,'0').replace(/[LI]/g,'1'), testTrickySecret.secret));
+  });
+
+  it('bad key comparison', () => {
+    test.assert(!MainClass.compare(testSecret.secret, testTrickySecret.secret));
+  });
+
+  it('good key check', () => {
     test.assert(MainClass.check(testPass, testSecret.secret, testSecret.iv, testSecret.timestamp));
   });
 
-  it('good key comparison (lowercase secret)', () => {
+  it('good key check (lowercase secret)', () => {
     test.assert(MainClass.check(testPass, testSecret.secret.toLowerCase(), testSecret.iv, testSecret.timestamp));
   });
 
-  it('bad key comparison (timestamp)', () => {
+  it('good key check (tricky characters secret)', () => {
+    test.assert(MainClass.check(testPass, testTrickySecret.secret, testTrickySecret.iv, testTrickySecret.timestamp));
+  });
+
+  it('bad key check (timestamp)', () => {
     test.assert(!MainClass.check(testPass, testSecret.secret, testSecret.iv, badTimestamp));
   });
 
-  it('bad key comparison (iv)', () => {
+  it('bad key check (iv)', () => {
     test.assert(!MainClass.check(testPass, testSecret.secret, badIV, testSecret.timestamp));
   });
 
-  it('bad key comparison (passphrase)', () => {
+  it('bad key check (passphrase)', () => {
     test.assert(!MainClass.check(badPass, testSecret.secret, testSecret.iv, testSecret.timestamp));
   });
 

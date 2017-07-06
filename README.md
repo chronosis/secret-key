@@ -47,6 +47,19 @@ secretKey.check(passphrase, secret, iv, timestamp);
 true
 ```
 
+### .compare(source, target)
+Tests that the `source` secret matched the `target` secret. Throws a `ReferenceError` if any of the parameters are missing.
+```es2016
+let source = 'HQYOT19-JMXGQLH-333GFQK';
+let target = 'HQY0T19-JMXGQ1H-333GFQK';
+
+secretKey.compare(source, target);
+```
+**Output**:
+```
+true
+```
+
 ### .create(passphrase[, iv][,  timestamp])
 Returns a new UUID and API Key pair. If no `iv` is passed, then a new uuid is used. If no `timestamp` is passed, then current time is used. If no `passphrase` is passed, then a `ReferenceError` is thrown indicating that the required parameter is missing
 ```es2016
