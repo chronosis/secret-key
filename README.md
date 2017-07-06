@@ -40,7 +40,7 @@ let secret = 'CDDPMWJ-EYEZXNC-2K39BYN';
 let iv = '64d8291b-5ede-4a81-8c29-4decf35f4b85';
 let timestamp = 1499292145146;
 
-uuidAPIKey.check(passphrase, secret, iv, timestamp);
+secretKey.check(passphrase, secret, iv, timestamp);
 ```
 **Output**:
 ```
@@ -50,7 +50,7 @@ true
 ### .create(passphrase[, iv][,  timestamp])
 Returns a new UUID and API Key pair. If no `iv` is passed, then a new uuid is used. If no `timestamp` is passed, then current time is used. If no `passphrase` is passed, then a `ReferenceError` is thrown indicating that the required parameter is missing
 ```es2016
-uuidAPIKey.create('1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X');
+secretKey.create('1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X');
 ```
 **Output**:
 ```
