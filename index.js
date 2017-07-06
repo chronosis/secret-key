@@ -108,17 +108,29 @@ class SecretKey {
     if (!secret) throw new ReferenceError('The required parameter \'secret\' is undefined.');
     if (!iv) throw new ReferenceError('The required parameter \'iv\' is undefined.');
     if (!timestamp) throw new ReferenceError('The required parameter \'timestamp\' is undefined.');
-    return (secret.toUpperCase() === this.create(passphrase, iv, timestamp).secret);
+
+    return this.compare(secret, this.create(passphrase, iv, timestamp).secret);
+  }
+
+  compare(source, target) {
+    if (!source) throw new ReferenceError('The required parameter \'source\' is undefined.');
+    if (!target) throw new ReferenceError('The required parameter \'target\' is undefined.');
+
+    // Replace tricky characters and move to uppercase only
+    source = source.toUpperCase().replace(/O/g, '0').replace(/[LI]/g, '1');
+    target = target.toUpperCase().replace(/O/g, '0').replace(/[LI]/g, '1');
+    return (source === target);
   }
 
   create(passphrase, iv, timestamp) {
+    if (!passphrase) throw new ReferenceError('The required parameter \'passphrase\' is undefined.');
+
     let splTime, encLarge, encSmall, encIV, nonce;
     let out = {
       secret: null,
       iv: null,
       timestamp: null
     };
-    if (!passphrase) throw new ReferenceError('The required parameter \'passphrase\' is undefined.');
     timestamp = timestamp || Date.now();
     out.iv = iv || uuidv4();
     encIV = this.uuidToRawBuffer(out.iv);
