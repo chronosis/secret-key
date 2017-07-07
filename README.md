@@ -61,7 +61,7 @@ true
 ```
 
 ### .create(passphrase[, iv][,  timestamp])
-Returns a new UUID and API Key pair. If no `iv` is passed, then a new uuid is used. If no `timestamp` is passed, then current time is used. If no `passphrase` is passed, then a `ReferenceError` is thrown indicating that the required parameter is missing
+Returns a new secret key with iv and timestamp for reverse verification. If no `iv` is passed, then a new uuid created and used. If no `timestamp` is passed, then the current time is used. If no `passphrase` is passed, then a `ReferenceError` is thrown indicating that the required parameter is missing
 ```es2016
 secretKey.create('1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X');
 ```
