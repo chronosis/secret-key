@@ -3,7 +3,7 @@
 [![Actual version published on npm](http://img.shields.io/npm/v/secret-key.svg)](https://www.npmjs.org/package/secret-key)
 [![Travis build status](https://travis-ci.org/chronosis/secret-key.svg)](https://www.npmjs.org/package/secret-key)
 [![Total npm module downloads](http://img.shields.io/npm/dt/secret-key.svg)](https://www.npmjs.org/package/secret-key)
-[![npm package quality](http://npm.packagequality.com/badge/secret-key.png)](https://www.npmjs.org/package/secret-key)
+[![npm package quality](http://npm.packagequality.com/shield/secret-key.svg)](https://www.npmjs.org/package/secret-key)
 
 [![NPM](https://nodei.co/npm/secret-key.png?downloads=true)](https://nodei.co/npm/secret-key/)
 
