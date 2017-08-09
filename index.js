@@ -91,7 +91,7 @@ class SecretKey {
     let pass = Buffer.allocUnsafe(32).fill('\u0000');
     Buffer.from(passphrase).copy(pass);
     // Zero fill the Buffer
-    if (pass.length < 32) pass.fill('\u0000', pass.length)
+    if (pass.length < 32) { pass.fill('\u0000', pass.length); }
     let cipher = crypto.createCipheriv('aes-256-ctr', pass, iv);
     let enc = cipher.update(this.intToRawStr(intVal), 'latin1', 'latin1');
     enc += cipher.final('latin1');
@@ -104,17 +104,17 @@ class SecretKey {
   }
 
   check(passphrase, secret, iv, timestamp) {
-    if (!passphrase) throw new ReferenceError('The required parameter \'passphrase\' is undefined.');
-    if (!secret) throw new ReferenceError('The required parameter \'secret\' is undefined.');
-    if (!iv) throw new ReferenceError('The required parameter \'iv\' is undefined.');
-    if (!timestamp) throw new ReferenceError('The required parameter \'timestamp\' is undefined.');
+    if (!passphrase) { throw new ReferenceError('The required parameter \'passphrase\' is undefined.'); }
+    if (!secret) { throw new ReferenceError('The required parameter \'secret\' is undefined.'); }
+    if (!iv) { throw new ReferenceError('The required parameter \'iv\' is undefined.'); }
+    if (!timestamp) { throw new ReferenceError('The required parameter \'timestamp\' is undefined.'); }
 
     return this.compare(secret, this.create(passphrase, iv, timestamp).secret);
   }
 
   compare(source, target) {
-    if (!source) throw new ReferenceError('The required parameter \'source\' is undefined.');
-    if (!target) throw new ReferenceError('The required parameter \'target\' is undefined.');
+    if (!source) { throw new ReferenceError('The required parameter \'source\' is undefined.'); }
+    if (!target) { throw new ReferenceError('The required parameter \'target\' is undefined.'); }
 
     // Replace tricky characters and move to uppercase only
     source = source.toUpperCase().replace(/O/g, '0').replace(/[LI]/g, '1');

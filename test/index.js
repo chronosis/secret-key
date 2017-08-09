@@ -12,7 +12,7 @@ let testTrickySecret = {
   secret: 'HQYOT19-JMXGQLH-333GFQK',
   iv: '8ee8a69b-da65-4866-bf48-ae7578b2142c',
   timestamp: 1499359283166
-}
+};
 let badPass = '1EEA6DC-JAM4DP2-PHVYPBN-VJXCJ9X';
 let badIV = '0b9ca335-92a8-46d8-b277-ec2ed83ac427';
 let badTimestamp = 1499287309236;
@@ -25,7 +25,7 @@ describe('secret-key', () => {
   it('load', () => {
     let myModule = require('../');
 
-    test.assert(typeof myModule == typeof MainClass);
+    test.assert(typeof myModule === typeof MainClass);
   });
 
   it('key creation', () => {
@@ -68,27 +68,27 @@ describe('secret-key', () => {
     test.assert(() => {
       let test = true;
       for (let i = 0; i < 100; i++) {
-        test = test && (MainClass.create().secret.length == expectedLen);
+        test = test && (MainClass.create().secret.length === expectedLen);
       }
       return test;
     });
   });
 
   it('uuid conversion', () => {
-    test.assert(MainClass.uuidToRawBuffer('63636363-6363-6363-6363-636363636363').toString() == 'cccccccccccccccc');
+    test.assert(MainClass.uuidToRawBuffer('63636363-6363-6363-6363-636363636363').toString() === 'cccccccccccccccc');
   });
 
   it('int32 to str conversion', () => {
-    test.assert(MainClass.intToRawStr(testTimestamp.small) == testIntConv)
+    test.assert(MainClass.intToRawStr(testTimestamp.small) === testIntConv);
   });
 
   it('str to int32 conversion', () => {
-    test.assert(MainClass.rawStrToInt(testIntConv) == testTimestamp.small);
+    test.assert(MainClass.rawStrToInt(testIntConv) === testTimestamp.small);
   });
 
   it('timestamp splitting', () => {
     let split = MainClass.splitTimestamp(testSecret.timestamp);
-    test.assert((split.small == testTimestamp.small) && (split.large == testTimestamp.large));
+    test.assert((split.small === testTimestamp.small) && (split.large === testTimestamp.large));
   });
   // it('test bad UUID', () => {
   //   test.assert(!MainClass.isUUID(testKey.apiKey));
