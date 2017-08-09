@@ -123,7 +123,7 @@ class SecretKey {
   }
 
   create(passphrase, iv, timestamp) {
-    if (!passphrase) throw new ReferenceError('The required parameter \'passphrase\' is undefined.');
+    if (!passphrase) { throw new ReferenceError('The required parameter \'passphrase\' is undefined.'); }
 
     let splTime, encLarge, encSmall, encIV, nonce;
     let out = {
