@@ -1,6 +1,6 @@
 {
   "name": "secret-key",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "A simple generator and validator for human-readable Base32-Crockford encoded Secret Keys.",
   "main": "index.js",
   "directories": {
