@@ -73,7 +73,7 @@ timestamp(1508266932343)
 ```shell
 $ secretkeyTool.js -c -e 12341234 -t 1508266623562 -i 43c74c93-5a29-486a-adc4-7bbdfd723513 -s XR2WF03-RPVR95E-5ES44JM
 
-Secret & Genetaion Values [EncKey, IV, Timestamp] match [true]
+Secret & Generation Values [EncKey, IV, Timestamp] match [true]
 ```
 
 ## API Reference

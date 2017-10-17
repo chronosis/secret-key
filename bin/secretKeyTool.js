@@ -47,7 +47,7 @@ if (program.generate) {
     if (program.iv && program.timestamp && program.enckey && program.secret) {
       compareCheck = secretKey.check(program.enckey, program.secret, iv, timestamp);
       out = (compareCheck?colors.green('true'):colors.red('false'));
-      console.log(`Secret & Genetaion Values [EncKey, IV, Timestamp] match : [${out}]`);
+      console.log(`Secret & Generation Values [EncKey, IV, Timestamp] match : [${out}]`);
     }
   }
   console.log('');
