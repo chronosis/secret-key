@@ -33,7 +33,50 @@ console.log(secretKey.create('1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X'));
   timestamp: 1499292145146 }
 ```
 
-## Reference
+## Command Line
+`secret-key` installs with a command line tool. The tool is available using the command `secretKeyTool` which can be install globally using:
+
+```
+  npm install secret-key -g
+```
+
+### Options
+```shell
+$ secretkeyTool.js
+
+Usage: secretKeyTool [options]
+
+Options:
+
+  -V, --version                output the version number
+  -g, --generate               Create a new Secret Key using the encryption key (-e) provided.
+  -c, --check                  Check the Secret Key against the Encryption Key, IV, and timestamp
+  -e, --enckey <enckey>        Encryption Key to use for generation and checking
+  -i, --iv <iv>                Initialization Vector used to create or check a secret key. Note: This should be a UUID.
+  -t, --timestamp <timestamp>  Timestamp used to create or check a secret key. Note: This should be a UNIX timestamp integer.
+  -s, --secret <secret>        Secret Key to check
+  -h, --help                   output usage information
+```
+
+### Examples
+#### Generation
+```shell
+$ secretkeyTool.js -g -e MySecret
+
+   EncKey(MySecret)
+   Secret(SY9X853-WGJJTF2-5EVFGXR)
+       IV(036a41f6-f143-4dcf-bff6-d39381ba2ff6)
+timestamp(1508266932343)
+```
+
+#### Testing
+```shell
+$ secretkeyTool.js -c -e 12341234 -t 1508266623562 -i 43c74c93-5a29-486a-adc4-7bbdfd723513 -s XR2WF03-RPVR95E-5ES44JM
+
+Secret & Genetaion Values [EncKey, IV, Timestamp] match [true]
+```
+
+## API Reference
 
 ### .check(passphrase, secret, iv, timestamp)
 Tests that a `secret` matches the `passphrase`, `iv`, and `timestamp` provided. Throws a `ReferenceError` if any of the parameters are missing.
