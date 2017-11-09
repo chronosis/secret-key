@@ -1,31 +1,34 @@
 #!/usr/bin/env node
 
-const
-  program       = require('commander')
-  , colors      = require('colors')
-  , secretKey   = require('../index')
-  , package     = require('../package.json')
-;
+/* eslint no-console: "off" */
+
+const program = require('commander');
+const colors = require('colors');
+const secretKey = require('../index');
+const pkg = require('../package.json');
 
 program
-  .version(package.version)
+  .version(pkg.version)
   .option('-g, --generate', 'Create a new Secret Key using the encryption key (-e) provided.')
   .option('-c, --check', 'Check the Secret Key against the Encryption Key, IV, and timestamp')
   .option('-e, --enckey <enckey>', 'Encryption Key to use for generation and checking')
   .option('-i, --iv <iv>', 'Initialization Vector used to create or check a secret key. Note: This should be a UUID.')
-  .option('-t, --timestamp <timestamp>', 'Timestamp used to create or check a secret key. Note: This should be a UNIX timestamp integer.')
+  .option(
+    '-t, --timestamp <timestamp>',
+    'Timestamp used to create or check a secret key. Note: This should be a UNIX timestamp integer.'
+  )
   .option('-s, --secret <secret>', 'Secret Key to check');
 
 program.on('--help', () => {
   console.log('');
-  console.log(`  Version: ${package.version}`);
+  console.log(`  Version: ${pkg.version}`);
 });
 
 program.parse(process.argv);
 
-let uuidCheck, apiKeyCheck, compareCheck, out;
-let iv = program.iv;
-let timestamp = program.timestamp;
+let compareCheck, out;
+const iv = program.iv;
+const timestamp = program.timestamp;
 
 if (program.generate) {
   if (!program.enckey) {
@@ -41,14 +44,11 @@ if (program.generate) {
 } else if (program.check) {
   if (!program.iv && !program.timestamp && !program.enckey && !program.secret) {
     program.help();
-  }
-  else {
+  } else if (program.iv && program.timestamp && program.enckey && program.secret) {
     // Both were passed and both are valid
-    if (program.iv && program.timestamp && program.enckey && program.secret) {
-      compareCheck = secretKey.check(program.enckey, program.secret, iv, timestamp);
-      out = (compareCheck?colors.green('true'):colors.red('false'));
-      console.log(`Secret & Generation Values [EncKey, IV, Timestamp] match : [${out}]`);
-    }
+    compareCheck = secretKey.check(program.enckey, program.secret, iv, timestamp);
+    out = (compareCheck ? colors.green('true') : colors.red('false'));
+    console.log(`Secret & Generation Values [EncKey, IV, Timestamp] match : [${out}]`);
   }
   console.log('');
 } else {

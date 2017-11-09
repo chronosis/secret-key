@@ -1,29 +1,29 @@
 const test = require('unit.js');
 
-let testIntConv = '\u0014Æú';
-let testTimestamp = { large: 349, small: 348558842 };
-let testPass = '1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X';
-let testSecret = {
+const testIntConv = '\u0014Æú';
+const testTimestamp = { large: 349, small: 348558842 };
+const testPass = '1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X';
+const testSecret = {
   secret: 'CDDPMWJ-EYEZXNC-2K39BYN',
   iv: '64d8291b-5ede-4a81-8c29-4decf35f4b85',
   timestamp: 1499292145146
 };
-let testTrickySecret = {
+const testTrickySecret = {
   secret: 'HQYOT19-JMXGQLH-333GFQK',
   iv: '8ee8a69b-da65-4866-bf48-ae7578b2142c',
   timestamp: 1499359283166
 };
-let badPass = '1EEA6DC-JAM4DP2-PHVYPBN-VJXCJ9X';
-let badIV = '0b9ca335-92a8-46d8-b277-ec2ed83ac427';
-let badTimestamp = 1499287309236;
-let expectedLen = 23;
+const badPass = '1EEA6DC-JAM4DP2-PHVYPBN-VJXCJ9X';
+const badIV = '0b9ca335-92a8-46d8-b277-ec2ed83ac427';
+const badTimestamp = 1499287309236;
+const expectedLen = 23;
 
 describe('secret-key', () => {
 
-  let MainClass = require('../');
+  const MainClass = require('../');
 
   it('load', () => {
-    let myModule = require('../');
+    const myModule = require('../');
 
     test.assert(typeof myModule === typeof MainClass);
   });
@@ -33,7 +33,10 @@ describe('secret-key', () => {
   });
 
   it('good key comparison', () => {
-    test.assert(MainClass.compare(testTrickySecret.secret.toLowerCase().replace(/O/g,'0').replace(/[LI]/g,'1'), testTrickySecret.secret));
+    const rplStr = testTrickySecret.secret.toLowerCase()
+      .replace(/O/g, '0')
+      .replace(/[LI]/g, '1');
+    test.assert(MainClass.compare(rplStr, testTrickySecret.secret));
   });
 
   it('bad key comparison', () => {
@@ -66,11 +69,11 @@ describe('secret-key', () => {
 
   it('key length', () => {
     test.assert(() => {
-      let test = true;
-      for (let i = 0; i < 100; i++) {
-        test = test && (MainClass.create().secret.length === expectedLen);
+      let check = true;
+      for (let itr = 0; itr < 100; itr++) {
+        check = check && (MainClass.create().secret.length === expectedLen);
       }
-      return test;
+      return check;
     });
   });
 
@@ -87,7 +90,7 @@ describe('secret-key', () => {
   });
 
   it('timestamp splitting', () => {
-    let split = MainClass.splitTimestamp(testSecret.timestamp);
+    const split = MainClass.splitTimestamp(testSecret.timestamp);
     test.assert((split.small === testTimestamp.small) && (split.large === testTimestamp.large));
   });
   // it('test bad UUID', () => {
