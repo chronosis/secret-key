@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 /* eslint no-console: "off" */
 
 const program = require('commander');
@@ -9,10 +8,22 @@ const pkg = require('../package.json');
 
 program
   .version(pkg.version)
-  .option('-g, --generate', 'Create a new Secret Key using the encryption key (-e) provided.')
-  .option('-c, --check', 'Check the Secret Key against the Encryption Key, IV, and timestamp')
-  .option('-e, --enckey <enckey>', 'Encryption Key to use for generation and checking')
-  .option('-i, --iv <iv>', 'Initialization Vector used to create or check a secret key. Note: This should be a UUID.')
+  .option(
+    '-g, --generate',
+    'Create a new Secret Key using the encryption key (-e) provided.'
+  )
+  .option(
+    '-c, --check',
+    'Check the Secret Key against the Encryption Key, IV, and timestamp'
+  )
+  .option(
+    '-e, --enckey <enckey>',
+    'Encryption Key to use for generation and checking'
+  )
+  .option(
+    '-i, --iv <iv>',
+    'Initialization Vector used to create or check a secret key. Note: This should be a UUID.'
+  )
   .option(
     '-t, --timestamp <timestamp>',
     'Timestamp used to create or check a secret key. Note: This should be a UNIX timestamp integer.'
@@ -44,10 +55,17 @@ if (program.generate) {
 } else if (program.check) {
   if (!program.iv && !program.timestamp && !program.enckey && !program.secret) {
     program.help();
-  } else if (program.iv && program.timestamp && program.enckey && program.secret) {
+  } else if (
+    program.iv && program.timestamp && program.enckey && program.secret
+  ) {
     // Both were passed and both are valid
-    compareCheck = secretKey.check(program.enckey, program.secret, iv, timestamp);
-    out = (compareCheck ? colors.green('true') : colors.red('false'));
+    compareCheck = secretKey.check(
+      program.enckey,
+      program.secret,
+      iv,
+      timestamp
+    );
+    out = compareCheck ? colors.green('true') : colors.red('false');
     console.log(`Secret & Generation Values [EncKey, IV, Timestamp] match : [${out}]`);
   }
   console.log('');
