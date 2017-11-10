@@ -29,7 +29,8 @@
     "no-caller": "error",
     "no-div-regex": "warn",
     "no-else-return": "warn",
-    "no-empty-function": ["error", { "allow": ["constructors"] }],
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "no-empty-function": ["error", { "allow": ["constructors", "arrowFunctions"] }],
     "no-eval": "warn",
     "no-extra-label": "error",
     "no-floating-decimal": "error",
@@ -65,7 +66,7 @@
     "no-buffer-constructor": "error",
     "no-new-require": "error",
     "no-path-concat": "error",
-
+    // Formatting Rules
     "array-bracket-newline": ["error", { "multiline": true }],
     "array-bracket-spacing": ["warn", "never"],
     "block-spacing": ["error", "always"],
@@ -115,7 +116,7 @@
     "spaced-comment": ["warn", "always"],
     "switch-colon-spacing": ["error", {"after": true, "before": false}],
     "template-tag-spacing": "error",
-
+    // ES6 Formatting Rules
     "arrow-body-style": ["error", "always"],
     "arrow-parens": "error",
     "arrow-spacing": ["error", { "before": true, "after": true }],
