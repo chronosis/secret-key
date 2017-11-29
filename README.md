@@ -1,6 +1,7 @@
 # secret-key
 
 [![NPM](https://nodei.co/npm/secret-key.png?downloads=true)](https://nodei.co/npm/secret-key/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fchronosis%2Fsecret-key.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fchronosis%2Fsecret-key?ref=badge_shield)
 
 [![Actual version published on npm](http://img.shields.io/npm/v/secret-key.svg)](https://www.npmjs.org/package/secret-key)
 [![Travis build status](https://travis-ci.org/chronosis/secret-key.svg)](https://www.npmjs.org/package/secret-key)
@@ -122,3 +123,6 @@ secretKey.create('1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X');
 
 ## License
 MIT
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fchronosis%2Fsecret-key.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fchronosis%2Fsecret-key?ref=badge_large)
