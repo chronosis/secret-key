@@ -1,4 +1,5 @@
-const test = require('unit.js');
+const chai = require('chai');
+const expect = chai.expect;
 
 const testIntConv = '\u0014Æú';
 const testTimestamp = { large: 349, small: 348558842 };
@@ -17,86 +18,99 @@ const badPass = '1EEA6DC-JAM4DP2-PHVYPBN-VJXCJ9X';
 const badIV = '0b9ca335-92a8-46d8-b277-ec2ed83ac427';
 const badTimestamp = 1499287309236;
 const expectedLen = 23;
+
 describe('secret-key', () => {
   const MainClass = require('../');
   it('load', () => {
     const myModule = require('../');
-    test.assert(typeof myModule === typeof MainClass);
+    expect(myModule.constructor.name).to.be.equal(MainClass.constructor.name);
   });
+
   it('key creation', () => {
-    test.object(MainClass.create(testPass));
+    expect(MainClass.create(testPass)).to.be.an('object');
   });
+
   it('good key comparison', () => {
     const rplStr = testTrickySecret.secret
       .toLowerCase()
       .replace(/O/g, '0')
       .replace(/[LI]/g, '1');
-    test.assert(MainClass.compare(rplStr, testTrickySecret.secret));
+    expect(MainClass.compare(rplStr, testTrickySecret.secret)).to.be.equal(true);
   });
+
   it('bad key comparison', () => {
-    test.assert(!MainClass.compare(testSecret.secret, testTrickySecret.secret));
+    expect(!MainClass.compare(testSecret.secret, testTrickySecret.secret)).to.be.equal(true);
   });
+
   it('good key check', () => {
-    test.assert(MainClass.check(
+    expect(MainClass.check(
       testPass,
       testSecret.secret,
       testSecret.iv,
       testSecret.timestamp
-    ));
+    )).to.be.equal(true);
   });
+
   it('good key check (lowercase secret)', () => {
-    test.assert(MainClass.check(
+    expect(MainClass.check(
       testPass,
       testSecret.secret.toLowerCase(),
       testSecret.iv,
       testSecret.timestamp
-    ));
+    )).to.be.equal(true);
   });
+
   it('good key check (tricky characters secret)', () => {
-    test.assert(MainClass.check(
+    expect(MainClass.check(
       testPass,
       testTrickySecret.secret,
       testTrickySecret.iv,
       testTrickySecret.timestamp
-    ));
+    )).to.be.equal(true);
   });
+
   it('bad key check (timestamp)', () => {
-    test.assert(!MainClass.check(testPass, testSecret.secret, testSecret.iv, badTimestamp));
+    expect(!MainClass.check(testPass, testSecret.secret, testSecret.iv, badTimestamp)).to.be.equal(true);
   });
+
   it('bad key check (iv)', () => {
-    test.assert(!MainClass.check(testPass, testSecret.secret, badIV, testSecret.timestamp));
+    expect(!MainClass.check(testPass, testSecret.secret, badIV, testSecret.timestamp)).to.be.equal(true);
   });
+
   it('bad key check (passphrase)', () => {
-    test.assert(!MainClass.check(
+    expect(!MainClass.check(
       badPass,
       testSecret.secret,
       testSecret.iv,
       testSecret.timestamp
-    ));
+    )).to.be.equal(true);
   });
+
   it('key length', () => {
-    test.assert(() => {
-      let check = true;
-      for (let itr = 0; itr < 100; itr++) {
-        check = check && MainClass.create().secret.length === expectedLen;
-      }
-      return check;
-    });
+    let check = true;
+    for (let itr = 0; itr < 100; itr++) {
+      check = (MainClass.create('Test Phrase').secret.length === expectedLen) && check;
+    }
+    expect(check).to.be.equal(true);
   });
+
   it('uuid conversion', () => {
-    test.assert(MainClass
+    expect(MainClass
       .uuidToRawBuffer('63636363-6363-6363-6363-636363636363')
       .toString() ===
-        'cccccccccccccccc');
+        'cccccccccccccccc').to.be.equal(true);
   });
+
   it('int32 to str conversion', () => {
-    test.assert(MainClass.intToRawStr(testTimestamp.small) === testIntConv);
+    expect(MainClass.intToRawStr(testTimestamp.small) === testIntConv).to.be.equal(true);
   });
+
   it('str to int32 conversion', () => {
-    test.assert(MainClass.rawStrToInt(testIntConv) === testTimestamp.small);
+    expect(MainClass.rawStrToInt(testIntConv) === testTimestamp.small).to.be.equal(true);
   });
+
   it('timestamp splitting', () => {
     const split = MainClass.splitTimestamp(testSecret.timestamp);
-    test.assert(split.small === testTimestamp.small && split.large === testTimestamp.large);
-  }); // it('test bad UUID', () => { //   test.assert(!MainClass.isUUID(testKey.apiKey)); // })
+    expect(split.small === testTimestamp.small && split.large === testTimestamp.large).to.be.equal(true);
+  }); // it('test bad UUID', () => { //   expect(!MainClass.isUUID(testKey.apiKey)); // })
 });
