@@ -30,7 +30,12 @@ describe('secret-key', () => {
     expect(MainClass.create(testPass)).to.be.an('object');
   });
 
-  it('good key comparison', () => {
+  it('key creation (no passphrase error)', () => {
+    const fn = (() => { MainClass.create(); });
+    expect(fn).to.throw(ReferenceError);
+  });
+
+  it('key comparison (matching)', () => {
     const rplStr = testTrickySecret.secret
       .toLowerCase()
       .replace(/O/g, '0')
@@ -38,11 +43,21 @@ describe('secret-key', () => {
     expect(MainClass.compare(rplStr, testTrickySecret.secret)).to.be.equal(true);
   });
 
-  it('bad key comparison', () => {
+  it('key comparison (non-matching)', () => {
     expect(!MainClass.compare(testSecret.secret, testTrickySecret.secret)).to.be.equal(true);
   });
 
-  it('good key check', () => {
+  it('key comparison error (missing source)', () => {
+    const fn = (() => { MainClass.compare(null, testTrickySecret.secret); });
+    expect(fn).to.throw(ReferenceError);
+  });
+
+  it('key comparison error (missing target)', () => {
+    const fn = (() => { MainClass.compare(testSecret.secret, null); });
+    expect(fn).to.throw(ReferenceError);
+  });
+
+  it('key check (good)', () => {
     expect(MainClass.check(
       testPass,
       testSecret.secret,
@@ -51,7 +66,7 @@ describe('secret-key', () => {
     )).to.be.equal(true);
   });
 
-  it('good key check (lowercase secret)', () => {
+  it('key check (good - lowercase secret)', () => {
     expect(MainClass.check(
       testPass,
       testSecret.secret.toLowerCase(),
@@ -60,7 +75,7 @@ describe('secret-key', () => {
     )).to.be.equal(true);
   });
 
-  it('good key check (tricky characters secret)', () => {
+  it('key check (good - tricky characters secret)', () => {
     expect(MainClass.check(
       testPass,
       testTrickySecret.secret,
@@ -69,21 +84,69 @@ describe('secret-key', () => {
     )).to.be.equal(true);
   });
 
-  it('bad key check (timestamp)', () => {
+  it('key check (bad - wrong timestamp)', () => {
     expect(!MainClass.check(testPass, testSecret.secret, testSecret.iv, badTimestamp)).to.be.equal(true);
   });
 
-  it('bad key check (iv)', () => {
+  it('key check (bad - wrong iv)', () => {
     expect(!MainClass.check(testPass, testSecret.secret, badIV, testSecret.timestamp)).to.be.equal(true);
   });
 
-  it('bad key check (passphrase)', () => {
+  it('key check (bad - wrong passphrase)', () => {
     expect(!MainClass.check(
       badPass,
       testSecret.secret,
       testSecret.iv,
       testSecret.timestamp
     )).to.be.equal(true);
+  });
+
+  it('key check error (missing passphrase)', () => {
+    const fn = (() => {
+      MainClass.check(
+        null,
+        testSecret.secret,
+        testSecret.iv,
+        testSecret.timestamp
+      );
+    });
+    expect(fn).to.throw(ReferenceError);
+  });
+
+  it('key check error (missing secret)', () => {
+    const fn = (() => {
+      MainClass.check(
+        testPass,
+        null,
+        testSecret.iv,
+        testSecret.timestamp
+      );
+    });
+    expect(fn).to.throw(ReferenceError);
+  });
+
+  it('key check error (missing iv)', () => {
+    const fn = (() => {
+      MainClass.check(
+        testPass,
+        testSecret.secret,
+        null,
+        testSecret.timestamp
+      );
+    });
+    expect(fn).to.throw(ReferenceError);
+  });
+
+  it('key check error (missing timestamp)', () => {
+    const fn = (() => {
+      MainClass.check(
+        testPass,
+        testSecret.secret,
+        testSecret.iv,
+        null
+      );
+    });
+    expect(fn).to.throw(ReferenceError);
   });
 
   it('key length', () => {
@@ -95,10 +158,55 @@ describe('secret-key', () => {
   });
 
   it('uuid conversion', () => {
-    expect(MainClass
-      .uuidToRawBuffer('63636363-6363-6363-6363-636363636363')
-      .toString() ===
-        'cccccccccccccccc').to.be.equal(true);
+    const key = '63636363-6363-6363-6363-636363636363';
+    const value = MainClass.uuidToRawBuffer(key).toString();
+    expect(value).to.be.equal('cccccccccccccccc');
+  });
+
+  it('splits timestamps', () => {
+    const out = MainClass.splitTimestamp(0);
+    expect(out.large).to.be.equal(0);
+    expect(out.small).to.be.equal(0);
+
+    const out2 = MainClass.splitTimestamp(100000000000);
+    expect(out2.large).to.be.equal(23);
+    expect(out2.small).to.be.equal(1215752192);
+  });
+
+  it('splits timestamps (bad timestamp)', () => {
+    const out = MainClass.splitTimestamp();
+    expect(out.large).to.be.equal(null);
+    expect(out.small).to.be.equal(null);
+  });
+
+  it('joins timestamps', () => {
+    const out = { large: 0, small: 0 };
+    expect(MainClass.joinTimestamp(out)).to.be.equal(0);
+
+    const out2 = { large: 23, small: 1215752192 };
+    expect(MainClass.joinTimestamp(out2)).to.be.equal(100000000000);
+  });
+
+  it('joins timestamps (bad object)', () => {
+    expect(MainClass.joinTimestamp()).to.be.equal(null);
+  });
+
+  it('cryptInt', () => {
+    const iv = MainClass.uuidToRawBuffer(testSecret.iv);
+    const out = MainClass.cryptInt(123, testSecret.secret, iv);
+    expect(out).to.be.equal(2268697355);
+
+    const out2 = MainClass.cryptInt(123456, testSecret.secret, iv);
+    expect(out2).to.be.equal(2268623152);
+  });
+
+  it('cryptInt (short passphrase)', () => {
+    const iv = MainClass.uuidToRawBuffer(testSecret.iv);
+    const out = MainClass.cryptInt(123, 'ABCDEFG', iv);
+    expect(out).to.be.equal(9829824);
+
+    const out2 = MainClass.cryptInt(123456, 'ABCDEFG', iv);
+    expect(out2).to.be.equal(9707515);
   });
 
   it('int32 to str conversion', () => {

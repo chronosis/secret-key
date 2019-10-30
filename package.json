@@ -1,6 +1,6 @@
 {
   "name": "secret-key",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "A simple generator and validator for human-readable Base32-Crockford encoded Secret Keys.",
   "main": "index.js",
   "directories": {
@@ -33,22 +33,22 @@
   },
   "homepage": "https://github.com/chronosis/secret-key#readme",
   "dependencies": {
-    "bn.js": "^4.11.8",
-    "colors": "^1.3.2",
-    "commander": "^2.19.0",
+    "bn.js": "^5.0.0",
+    "colors": "^1.4.0",
+    "commander": "^3.0.2",
     "encode32": "^1.1.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "codacy-coverage": "^3.4.0",
-    "eslint": "^5.12.0",
-    "gulp": "^4.0.0",
-    "gulp-eslint": "^5.0.0",
-    "gulp-mocha": "^6.0.0",
-    "gulp-prettier": "^2.0.0",
-    "mocha": "^5.2.0",
-    "nyc": "^13.1.0",
-    "prettier": "^1.15.3"
+    "eslint": "^6.6.0",
+    "gulp": "^4.0.2",
+    "gulp-eslint": "^6.0.0",
+    "gulp-mocha": "^7.0.2",
+    "gulp-prettier": "^2.2.0",
+    "mocha": "^6.2.2",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2"
   }
 }

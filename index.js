@@ -17,7 +17,7 @@ class SecretKey {
   splitTimestamp(timestamp) {
     let num;
     const out = { large: null, small: null };
-    if (timestamp) {
+    if (timestamp !== null && timestamp !== undefined) {
       num = new BN(timestamp, 10);
       out.small = num.and(new BN('FFFFFFFF', 16)).toNumber();
       out.large = num.shrn(32).toNumber();
@@ -89,10 +89,7 @@ class SecretKey {
   cryptInt(intVal, passphrase, iv) {
     const pass = Buffer.allocUnsafe(32).fill('\u0000');
     Buffer.from(passphrase).copy(pass);
-    // Zero fill the Buffer
-    if (pass.length < 32) {
-      pass.fill('\u0000', pass.length);
-    }
+
     const cipher = crypto.createCipheriv('aes-256-ctr', pass, iv);
     let enc = cipher.update(this.intToRawStr(intVal), 'latin1', 'latin1');
     enc += cipher.final('latin1');

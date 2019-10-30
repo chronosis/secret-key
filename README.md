@@ -5,9 +5,8 @@
 [![Actual version published on npm](http://img.shields.io/npm/v/secret-key.svg)](https://www.npmjs.org/package/secret-key)
 [![Travis build status](https://travis-ci.org/chronosis/secret-key.svg)](https://www.npmjs.org/package/secret-key)
 [![Total npm module downloads](http://img.shields.io/npm/dt/secret-key.svg)](https://www.npmjs.org/package/secret-key)
-[![Package Quality](http://npm.packagequality.com/shield/secret-key.svg)](http://packagequality.com/#?package=secret-key)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e1d4d393c55843f5803e2137a061e4c9)](https://www.codacy.com/app/chronosis/secret-key?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=chronosis/secret-key&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/e1d4d393c55843f5803e2137a061e4c9)](https://www.codacy.com/app/chronosis/secret-key?utm_source=github.com&utm_medium=referral&utm_content=chronosis/secret-key&utm_campaign=Badge_Coverage)
+[![Codacy Coverage Badge](https://api.codacy.com/project/badge/Coverage/e1d4d393c55843f5803e2137a061e4c9)](https://www.codacy.com/app/chronosis/secret-key?utm_source=github.com&utm_medium=referral&utm_content=chronosis/secret-key&utm_campaign=Badge_Coverage)
 
 A simple generator and validator for human-readable Base32-Crockford encoded Secret Keys.
 
@@ -121,4 +120,4 @@ secretKey.create('1EEA6DC-JAM4DP2-PHVYPBN-V0XCJ9X');
 ```
 
 ## License
-Copyright (c) 2017,2018,2019 Jay Reardon -- Licensed under the MIT license.
+Copyright © 2017, 2018, 2019 Jay Reardon -- Licensed under the MIT license.
