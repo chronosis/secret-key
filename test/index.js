@@ -102,42 +102,50 @@ describe('secret-key', () => {
   });
 
   it('key check error (missing passphrase)', () => {
-    const fn = (() => { MainClass.check(
-      null,
-      testSecret.secret,
-      testSecret.iv,
-      testSecret.timestamp
-    ); });
+    const fn = (() => {
+      MainClass.check(
+        null,
+        testSecret.secret,
+        testSecret.iv,
+        testSecret.timestamp
+      );
+    });
     expect(fn).to.throw(ReferenceError);
   });
 
   it('key check error (missing secret)', () => {
-    const fn = (() => { MainClass.check(
-      testPass,
-      null,
-      testSecret.iv,
-      testSecret.timestamp
-    ); });
+    const fn = (() => {
+      MainClass.check(
+        testPass,
+        null,
+        testSecret.iv,
+        testSecret.timestamp
+      );
+    });
     expect(fn).to.throw(ReferenceError);
   });
 
   it('key check error (missing iv)', () => {
-    const fn = (() => { MainClass.check(
-      testPass,
-      testSecret.secret,
-      null,
-      testSecret.timestamp
-    ); });
+    const fn = (() => {
+      MainClass.check(
+        testPass,
+        testSecret.secret,
+        null,
+        testSecret.timestamp
+      );
+    });
     expect(fn).to.throw(ReferenceError);
   });
 
   it('key check error (missing timestamp)', () => {
-    const fn = (() => { MainClass.check(
-      testPass,
-      testSecret.secret,
-      testSecret.iv,
-      null
-    ); });
+    const fn = (() => {
+      MainClass.check(
+        testPass,
+        testSecret.secret,
+        testSecret.iv,
+        null
+      );
+    });
     expect(fn).to.throw(ReferenceError);
   });
 
