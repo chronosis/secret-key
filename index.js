@@ -4,7 +4,7 @@
 const base32 = require('encode32');
 const BN = require('bn.js');
 const crypto = require('crypto');
-const uuidv4 = require('uuid/v4');
+const uuidv4 = require('uuid').v4;
 
 // Secret Keys are a Base32-Crockford encoded representation of timestamps that
 // have been large number split into their 32-bit large and small endian and
